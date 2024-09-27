@@ -1,22 +1,16 @@
-﻿namespace CharacterConsole.Tests;
+﻿using CharacterConsole;
 
 public class MockInput : IInput
 {
-    private readonly string[] _inputs;
-    private int _index;
+    private readonly Queue<string> _inputs;
 
-    public MockInput(string[] inputs = null)
+    public MockInput(IEnumerable<string> inputs = null)
     {
-        _inputs = inputs ?? new string[] { };
-        _index = 0;
+        _inputs = new Queue<string>(inputs ?? new string[0]);
     }
 
     public string ReadLine()
     {
-        if (_index < _inputs.Length)
-        {
-            return _inputs[_index++];
-        }
-        return "Mocked input";
+        return _inputs.Count > 0 ? _inputs.Dequeue() : string.Empty;
     }
 }

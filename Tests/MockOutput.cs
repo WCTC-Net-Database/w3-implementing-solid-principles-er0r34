@@ -1,16 +1,16 @@
-﻿namespace CharacterConsole.Tests;
+﻿using CharacterConsole;
 
 public class MockOutput : IOutput
 {
-    public string Output { get; private set; } = string.Empty;
+    public List<string> Output { get; } = new List<string>();
 
     public void WriteLine(string message)
     {
-        Output += message + "\n";
+        Output.Add(message);
     }
 
     public void Write(string message)
     {
-        Output += message;
+        Output.Add(message);
     }
 }

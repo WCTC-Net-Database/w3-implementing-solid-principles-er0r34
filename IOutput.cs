@@ -1,7 +1,8 @@
-﻿namespace CharacterConsole;
-
-public interface IOutput
+﻿namespace CharacterConsole
 {
-    void WriteLine(string message);
-    void Write(string message);
+    public interface IOutput
+    {
+        void WriteLine(string message);
+        void Write(string message);
+    }
 }

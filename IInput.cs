@@ -1,6 +1,7 @@
-﻿namespace CharacterConsole;
-
-public interface IInput
+﻿namespace CharacterConsole
 {
-    string ReadLine();
+    public interface IInput
+    {
+        string ReadLine();
+    }
 }

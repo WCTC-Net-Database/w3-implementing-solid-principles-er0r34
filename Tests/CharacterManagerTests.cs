@@ -1,53 +1,56 @@
 ﻿using Xunit;
 
-namespace CharacterConsole.Tests;
-
-public class CharacterManagerTests
+namespace CharacterConsole.Tests
 {
-    [Fact]
-    public void DisplayCharacters_ShouldOutputAllCharacters()
+    public class CharacterManagerTests
     {
-        // Arrange
-        var input = new MockInput();
-        var output = new MockOutput();
-        var manager = new CharacterManager(input, output);
+        private const string TestFilePath = @"C:\Users\er0r3\Source\Repos\w3-implementing-solid-principles-er0r34\test_input.csv";
 
-        // Act
-        manager.DisplayCharacters();
+        [Fact]
+        public void DisplayAllCharacters_ShouldOutputAllCharacters()
+        {
+            // Arrange
+            var input = new MockInput();
+            var output = new MockOutput();
+            var manager = new CharacterManager(input, output, TestFilePath);
 
-        // Assert
-        Assert.Contains("John,Fighter,1,sword|shield", output.Output);
-        Assert.Contains("Jane,Wizard,2,staff|robe", output.Output);
-    }
+            // Act
+            manager.DisplayAllCharacters();
 
-    [Fact]
-    public void AddCharacter_ShouldAppendCharacterToFile()
-    {
-        // Arrange
-        var input = new MockInput(new[] { "Alice", "Cleric", "3", "mace|armor" });
-        var output = new MockOutput();
-        var manager = new CharacterManager(input, output);
+            // Assert
+            Assert.Contains("John,Fighter,1,100,sword|shield", output.Output);
+            Assert.Contains("Jane,Wizard,2,80,staff|robe", output.Output);
+        }
 
-        // Act
-        manager.AddCharacter();
+        [Fact]
+        public void AddCharacter_ShouldAppendCharacterToFile()
+        {
+            // Arrange
+            var input = new MockInput(new[] { "Alice", "Cleric", "3", "120", "mace", "armor", "done" });
+            var output = new MockOutput();
+            var manager = new CharacterManager(input, output, TestFilePath);
 
-        // Assert
-        Assert.Contains("Alice,Cleric,3,mace|armor", output.Output);
-        // Additional check to verify if the character is added to the file would be done in integration tests
-    }
+            // Act
+            manager.AddCharacter();
 
-    [Fact]
-    public void LevelUpCharacter_ShouldIncreaseCharacterLevel()
-    {
-        // Arrange
-        var input = new MockInput(new[] { "1" });
-        var output = new MockOutput();
-        var manager = new CharacterManager(input, output);
+            // Assert
+            Assert.Contains("Alice,Cleric,3,120,mace|armor", output.Output);
+            // Additional check to verify if the character is added to the file would be done in integration tests
+        }
 
-        // Act
-        manager.LevelUpCharacter();
+        [Fact]
+        public void LevelUpCharacter_ShouldIncreaseCharacterLevel()
+        {
+            // Arrange
+            var input = new MockInput(new[] { "John" });
+            var output = new MockOutput();
+            var manager = new CharacterManager(input, output, TestFilePath);
 
-        // Assert
-        Assert.Contains("John is now level 2.", output.Output);
+            // Act
+            manager.LevelUpCharacter();
+
+            // Assert
+            Assert.Contains("John is now level 2.", output.Output);
+        }
     }
 }
