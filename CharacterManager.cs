@@ -58,15 +58,39 @@ namespace CharacterConsole
                 }
             }
         }
-
         public void DisplayAllCharacters()
         {
             foreach (var character in _characters)
             {
-                string equipment = character.Equipment != null ? string.Join(", ", character.Equipment) : "None";
-                _output.WriteLine($"Name: {character.Name}, Class: {character.CharacterClass}, Level: {character.Level}, HP: {character.HitPoints}, Equipment: {equipment}");
+                // Display character name
+                _output.WriteLine($"{character.Name}");
+
+                // Display level, class, and hit points with explicit spacing
+                _output.WriteLine($"Level {character.Level} {character.CharacterClass}     {character.HitPoints}/{character.HitPoints} Hit Points");
+
+                // Display equipment with padding
+                _output.WriteLine("Equipment:");
+                if (character.Equipment != null && character.Equipment.Length > 0)
+                {
+                    foreach (var item in character.Equipment)
+                    {
+                        _output.WriteLine($"{new string(' ', 10)}{item}");
+                    }
+                }
+                else
+                {
+                    _output.WriteLine($"{new string(' ', 10)}None");
+                }
+
+                // Add a blank line after each character
+                _output.WriteLine(""); // Pass an empty string to WriteLine
             }
         }
+
+
+
+
+
 
 
 
